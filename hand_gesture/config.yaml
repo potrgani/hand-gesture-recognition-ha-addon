@@ -1,5 +1,5 @@
 name: "Hand Gesture Recognition"
-image: "myhub/image-{arch}-hand-gesture-recognition"
+image: "potrgani/handgesturerecognition:0.0.1"
 version: "1.0.0"
 slug: "hand-gesture-recognition"
 description: "Recognize hand gestures using MediaPipe and publish them to MQTT."
