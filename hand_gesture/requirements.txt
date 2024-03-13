@@ -1,0 +1,4 @@
+opencv-python
+mediapipe
+paho-mqtt==1.5.0
+
