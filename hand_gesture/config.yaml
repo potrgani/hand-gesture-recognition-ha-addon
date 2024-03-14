@@ -8,7 +8,7 @@ boot: auto
 host_network: true  # Use host network mode
 ingress_panel: true
 docker:
-  image: your-addon-image:latest
+  image: ghcr.io/potrgani/handgesturerecognition :latest
   privileged: true
   ports:
     - "1883:1883"
