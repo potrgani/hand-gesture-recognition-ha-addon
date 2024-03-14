@@ -1,6 +1,6 @@
 name: "Hand Gesture Recognition"
 image: "ghcr.io/potrgani/handgesturerecognition"
-version: "1.0.0"
+version: "latest"
 slug: "hand-gesture-recognition"
 description: "Recognize hand gestures using MediaPipe and publish them to MQTT."
 startup: application
@@ -8,7 +8,7 @@ boot: auto
 host_network: true  # Use host network mode
 ingress_panel: true
 docker:
-  image: ghcr.io/potrgani/handgesturerecognition :latest
+  image: ghcr.io/potrgani/handgesturerecognition:latest
   privileged: true
   ports:
     - "1883:1883"
