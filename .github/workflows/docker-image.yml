@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker pull potrgani/handgesturerecognition:0.0.1
+      run: docker pull potrgani/handgesturerecognition:1.0.1
