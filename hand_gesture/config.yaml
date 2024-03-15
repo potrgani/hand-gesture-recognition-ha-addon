@@ -3,6 +3,7 @@ image: "ghcr.io/potrgani/handgesturerecognition"
 version: "1.0.0"
 slug: "hand-gesture-recognition"
 description: "Recognize hand gestures using MediaPipe and publish them to MQTT."
+url: "https://github.com/potrgani/hand-gesture-recognition-ha-addon/tree/main"
 startup: application
 boot: auto
 host_network: true  # Use host network mode
