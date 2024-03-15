@@ -10,9 +10,18 @@ json_file_path = '/data/options.json'
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 from mediapipe.framework.formats import landmark_pb2
-logger = logging.getLogger(__name__)
 with open(json_file_path, 'r') as file:
     json_data = file.read()
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)  # Set logging level to INFO or any other level you prefer
+
+# Define a handler to output logs to standard output
+handler = logging.StreamHandler(sys.stdout)
+handler.setLevel(logging.INFO)  # Set the level for this handler
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 # Parse the JSON data
 data = json.loads(json_data)
@@ -229,7 +238,7 @@ def run(model: str, num_hands: int,
          # Check if the handedness status has changed
         if hand_status != prev_handedness_value and score > 0.6:
               mqtt_client.publish(mqtt_topic, hand_status)
-              logger.info(hand_status)
+              #logger.info(hand_status)
               prev_handedness_value = hand_status
               print (hand_status)
 
