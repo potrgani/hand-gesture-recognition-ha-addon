@@ -238,7 +238,7 @@ def run(model: str, num_hands: int,
          # Check if the handedness status has changed
         if hand_status != prev_handedness_value and score > 0.6:
               mqtt_client.publish(mqtt_topic, hand_status)
-              #logger.info(hand_status)
+              logger.info(hand_status)
               prev_handedness_value = hand_status
               print (hand_status)
 
