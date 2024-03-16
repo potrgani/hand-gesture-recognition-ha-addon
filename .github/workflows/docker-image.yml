@@ -1,21 +1,18 @@
 name: Docker Image CI
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: |
-        docker build -t ghcr.io/potrgani/handgesturerecognition:1.0.3  .
-        echo ${{ secrets.GHCR_PAT }} | docker login ghcr.io -u potrgani --password-stdin
-        docker push ghcr.io/potrgani/handgesturerecognition:1.0.3
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build the Docker image
+        run: docker build -t ghcr.io/potrgani/handgesturerecognition:1.0.4 .
+      - name: Github login
+        run:  echo ${{ secrets.GHCR_PAT }} | docker login ghcr.io -u potrgani --password-stdin
+      - name: Push to Github
+        run: docker push ghcr.io/potrgani/handgesturerecognition:1.0.4
+       
