@@ -16,8 +16,6 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: |
-        # docker pull potrgani/handgesturerecognition:1.0.1
         docker build -t ghcr.io/potrgani/handgesturerecognition:1.0.3 .
         echo ${{ secrets.GHCR_PAT }} | docker login ghcr.io -u potrgani --password-stdin
-        # docker login ghcr.io -u ${{ github.repository_owner }} -p ${{ secrets.GHCR_PAT }}
         docker push ghcr.io/potrgani/handgesturerecognition:1.0.3
