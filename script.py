@@ -56,7 +56,7 @@ def restart_mqtt_connection():
     time.sleep(1)  # Wait for the client to disconnect
     mqtt_client.connect(mqtt_broker_address, mqtt_port, 60)
     print("Restarted MQTT connection")
-restart_mqtt_connection()
+
 # Timer for restarting MQTT connection every 3 minutes
 mqtt_restart_interval = 180  # 3 minutes (in seconds)
 mqtt_last_restart_time = time.time()
@@ -237,6 +237,7 @@ def run(model: str, num_hands: int,
         #print (hand_status+str(score))
          # Check if the handedness status has changed
         if hand_status != prev_handedness_value and score > 0.6:
+              restart_mqtt_connection()
               mqtt_client.publish(mqtt_topic, hand_status)
               logger.info(hand_status)
               prev_handedness_value = hand_status
