@@ -54,6 +54,7 @@ def on_connect(client, userdata, flags, rc):
         print("Connected to MQTT Broker")
     else:
         print("Connection to MQTT Broker failed with code", rc)
+        restart_mqtt_connection
 
 mqtt_client.on_connect = on_connect
 
