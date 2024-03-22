@@ -42,13 +42,7 @@ mqtt_password = data.get("mqtt_password")
 mqtt_client = mqtt.Client()
 mqtt_client.username_pw_set(mqtt_username, mqtt_password)
 
-def on_connect(client, userdata, flags, rc):
-    if rc == 0:
-        print("Connected to MQTT Broker")
-    else:
-        print("Connection to MQTT Broker failed with code", rc)
 
-mqtt_client.on_connect = on_connect
 
 # Function to restart MQTT connection
 def restart_mqtt_connection():
@@ -57,6 +51,15 @@ def restart_mqtt_connection():
     mqtt_client.connect(mqtt_broker_address, mqtt_port, 60)
     print("Restarted MQTT connection")
 
+def on_connect(client, userdata, flags, rc):
+    if rc == 0:
+        print("Connected to MQTT Broker")
+    else:
+        print("Connection to MQTT Broker failed with code", rc)
+        restart_mqtt_connection
+
+
+mqtt_client.on_connect = on_connect
 # Timer for restarting MQTT connection every 3 minutes
 mqtt_restart_interval = 180  # 3 minutes (in seconds)
 mqtt_last_restart_time = time.time()
@@ -237,7 +240,7 @@ def run(model: str, num_hands: int,
         #print (hand_status+str(score))
          # Check if the handedness status has changed
         if hand_status != prev_handedness_value and score > 0.6:
-              restart_mqtt_connection()
+              on_connect
               mqtt_client.publish(mqtt_topic, hand_status)
               logger.info(hand_status)
               prev_handedness_value = hand_status
