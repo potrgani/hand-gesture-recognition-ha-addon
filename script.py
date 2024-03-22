@@ -42,6 +42,8 @@ mqtt_password = data.get("mqtt_password")
 mqtt_client = mqtt.Client()
 mqtt_client.username_pw_set(mqtt_username, mqtt_password)
 
+
+
 # Function to restart MQTT connection
 def restart_mqtt_connection():
     mqtt_client.disconnect()
@@ -56,8 +58,8 @@ def on_connect(client, userdata, flags, rc):
         print("Connection to MQTT Broker failed with code", rc)
         restart_mqtt_connection
 
-mqtt_client.on_connect = on_connect
 
+mqtt_client.on_connect = on_connect
 # Timer for restarting MQTT connection every 3 minutes
 mqtt_restart_interval = 180  # 3 minutes (in seconds)
 mqtt_last_restart_time = time.time()
