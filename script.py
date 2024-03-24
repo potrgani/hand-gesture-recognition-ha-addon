@@ -60,6 +60,11 @@ def on_connect(client, userdata, flags, rc):
 
 
 mqtt_client.on_connect = on_connect
+
+def check_mqtt_connection():
+    if not mqtt_client.is_connected():
+        logger.warning("MQTT client is not connected. Reconnecting...")
+        mqtt_client.reconnect()
 # Timer for restarting MQTT connection every 3 minutes
 mqtt_restart_interval = 180  # 3 minutes (in seconds)
 mqtt_last_restart_time = time.time()
@@ -240,7 +245,7 @@ def run(model: str, num_hands: int,
         #print (hand_status+str(score))
          # Check if the handedness status has changed
         if hand_status != prev_handedness_value and score > 0.6:
-              on_connect()
+              check_mqtt_connection()
               mqtt_client.publish(mqtt_topic, hand_status)
               logger.info(hand_status)
               prev_handedness_value = hand_status
