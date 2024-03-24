@@ -92,7 +92,7 @@ def run(model: str, num_hands: int,
 
   # Start capturing video input from the camera
   #cap = cv2.VideoCapture(camera_id)
-  rtsp_url = "rtsp://192.168.100.120:8080/h264.sdp"
+  #rtsp_url = "rtsp://192.168.100.120:8080/h264.sdp"
   cap = cv2.VideoCapture(data.get("rtsp_url"))
  # cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
  # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
