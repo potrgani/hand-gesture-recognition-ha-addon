@@ -56,7 +56,7 @@ def on_connect(client, userdata, flags, rc):
         print("Connected to MQTT Broker")
     else:
         print("Connection to MQTT Broker failed with code", rc)
-        restart_mqtt_connection
+        restart_mqtt_connection()
 
 
 mqtt_client.on_connect = on_connect
@@ -240,7 +240,7 @@ def run(model: str, num_hands: int,
         #print (hand_status+str(score))
          # Check if the handedness status has changed
         if hand_status != prev_handedness_value and score > 0.6:
-              on_connect
+              on_connect()
               mqtt_client.publish(mqtt_topic, hand_status)
               logger.info(hand_status)
               prev_handedness_value = hand_status
