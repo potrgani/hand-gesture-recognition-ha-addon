@@ -16,10 +16,11 @@ The model can recognize seven classes (i.e. 👍, 👎, ✌️, ☝️, ✊, �
 1. Add the repository to your Home Assistant instance.
    
   [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https://github.com/potrgani/hand-gesture-recognition-ha-addon)
-3. Install the Hand Gesture Recognition Add-on.
-4. Installation will take a while, so grab a cup of coffee ☕️ and relax.
-5. Configure the add-on with your MQTT broker details and RTSP URL.
-6. Start the add-on.
+  
+2. Install the Hand Gesture Recognition Add-on.
+3. Installation will take a while, so grab a cup of coffee ☕️ and relax.
+4. Configure the add-on with your MQTT broker details and RTSP URL.
+5. Start the add-on.
 
 # Configuration
 
