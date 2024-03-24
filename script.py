@@ -64,7 +64,7 @@ mqtt_client.on_connect = on_connect
 def check_mqtt_connection():
     if not mqtt_client.is_connected():
         logger.warning("MQTT client is not connected. Reconnecting...")
-        mqtt_client.reconnect()
+        restart_mqtt_connection()
 # Timer for restarting MQTT connection every 3 minutes
 mqtt_restart_interval = 180  # 3 minutes (in seconds)
 mqtt_last_restart_time = time.time()
