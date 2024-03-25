@@ -146,6 +146,7 @@ def run(model: str, num_hands: int,
 
     
   prev_handedness_value = None
+  hand_time= None
 
   # Continuously capture images from the camera and run inference
   while cap.isOpened():
@@ -236,6 +237,11 @@ def run(model: str, num_hands: int,
           #print(result_text, (text_x, text_y))
         #hand_status = (handedness_value+' '+category_name) #right/left + category name
         hand_status = category_name
+
+        if hand_time is not None:
+           time_difference = int(time.time() - hand_time)
+           if time_difference >= data.get("reset_hand_status_time") :
+              prev_handedness_value = None
         #print (hand_status+str(score))
          # Check if the handedness status has changed
         if hand_status != prev_handedness_value and score > 0.6:
