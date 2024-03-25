@@ -1,5 +1,5 @@
 name: "Hand Gesture Recognition"
-version: "1.0.15"
+version: "1.1.1"
 image: "ghcr.io/potrgani/handgesturerecognition"
 slug: "hand-gesture-recognition"
 description: "Recognize hand gestures using MediaPipe and publish them to MQTT."
@@ -33,6 +33,7 @@ options:
   mqtt_username: null
   mqtt_password: null
   mqtt_topic: "hand_gesture_status"
+  reset_hand_status_time: 10
   
 schema:
   rtsp_url: str
@@ -41,4 +42,4 @@ schema:
   mqtt_username: str
   mqtt_password: password
   mqtt_topic: str
-  
+  reset_hand_status_time: int
