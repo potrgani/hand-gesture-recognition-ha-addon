@@ -242,12 +242,7 @@ def run(model: str, num_hands: int,
               client.publish(mqtt_topic, hand_status)
               logger.info(hand_status)
               prev_handedness_value = hand_status
-        # Wait for 10 seconds
-        time.sleep(10)
-
-        # Reset prev_handedness_value to None after 10 seconds
-        prev_handedness_value = None
-              
+               
 
         # Draw hand landmarks on the frame
         hand_landmarks_proto = landmark_pb2.NormalizedLandmarkList()
