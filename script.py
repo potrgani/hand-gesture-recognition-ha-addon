@@ -13,6 +13,7 @@ from mediapipe.framework.formats import landmark_pb2
 with open(json_file_path, 'r') as file:
     json_data = file.read()
 
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)  # Set logging level to INFO or any other level you prefer
 
@@ -27,6 +28,7 @@ logger.addHandler(handler)
 data = json.loads(json_data)
 
 
+
 mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
@@ -38,36 +40,32 @@ mqtt_topic = data.get("mqtt_topic")
 mqtt_username = data.get("mqtt_username")
 mqtt_password = data.get("mqtt_password")
 
-# MQTT client
-mqtt_client = mqtt.Client()
-mqtt_client.username_pw_set(mqtt_username, mqtt_password)
 
-
-
-# Function to restart MQTT connection
-def restart_mqtt_connection():
-    mqtt_client.disconnect()
-    time.sleep(1)  # Wait for the client to disconnect
-    mqtt_client.connect(mqtt_broker_address, mqtt_port, 60)
-    print("Restarted MQTT connection")
 
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
-        print("Connected to MQTT Broker")
+        logger.info("Connected to MQTT Broker")
     else:
-        print("Connection to MQTT Broker failed with code", rc)
-        restart_mqtt_connection()
+        logger.info("Connection to MQTT Broker failed with code", rc)
+
+# Initialize MQTT client
+client = mqtt.Client()
+
+# Set credentials for broker
+client.username_pw_set(username=mqtt_username, password=mqtt_password)
+
+# Assign callback functions
+client.on_connect = on_connect
 
 
-mqtt_client.on_connect = on_connect
+# Connect to broker
+client.connect(mqtt_broker_address, mqtt_port, 60)
 
-def check_mqtt_connection():
-    if not mqtt_client.is_connected():
-        logger.warning("MQTT client is not connected. Reconnecting...")
-        restart_mqtt_connection()
-# Timer for restarting MQTT connection every 3 minutes
-mqtt_restart_interval = 180  # 3 minutes (in seconds)
-mqtt_last_restart_time = time.time()
+# Start the loop
+client.loop_start()
+        
+
+
 
 # Global variables to calculate FPS
 COUNTER, FPS = 0, 0
@@ -97,7 +95,7 @@ def run(model: str, num_hands: int,
 
   # Start capturing video input from the camera
   #cap = cv2.VideoCapture(camera_id)
-  #rtsp_url = "rtsp://192.168.100.120:8080/h264.sdp"
+
   cap = cv2.VideoCapture(data.get("rtsp_url"))
  # cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
  # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
@@ -160,11 +158,7 @@ def run(model: str, num_hands: int,
             # Increment the frame count
     FRAME_COUNT += 1
 
-        # Check if it's time to restart MQTT connection
-    current_time = time.time()
-    if current_time - mqtt_last_restart_time >= mqtt_restart_interval:
-        restart_mqtt_connection()
-        mqtt_last_restart_time = current_time
+   
 
         # Save an image every 1 second
     if FRAME_COUNT % 25 == 0:
@@ -245,11 +239,10 @@ def run(model: str, num_hands: int,
         #print (hand_status+str(score))
          # Check if the handedness status has changed
         if hand_status != prev_handedness_value and score > 0.6:
-              check_mqtt_connection()
-              mqtt_client.publish(mqtt_topic, hand_status)
+              client.publish(mqtt_topic, hand_status)
               logger.info(hand_status)
               prev_handedness_value = hand_status
-              print (hand_status)
+              
 
         # Draw hand landmarks on the frame
         hand_landmarks_proto = landmark_pb2.NormalizedLandmarkList()
